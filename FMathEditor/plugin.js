@@ -31,7 +31,26 @@ tinymce.PluginManager.add('FMathEditor', function(editor, url) {
 								alert(result);
 							}else{
 								var img = result;
-								tinymce.activeEditor.insertContent('<img alt="MathML (base64):'+ window.btoa(mathml) +'" src="'+img+'"/>')
+                var editor = tinymce.activeEditor;
+								editor.insertContent('<img id="newFormula" alt="MathML (base64):'+ window.btoa(mathml) +'" src="'+img+'"/>');
+                var formulaElement = editor.getDoc().getElementById('newFormula');
+                formulaElement.removeAttribute('id');
+                formulaElement.onload = function() {
+                  if (formulaElement.clientWidth > 0) {
+                    formulaElement.width = formulaElement.clientWidth;
+                  }
+                  if (formulaElement.clientHeight > 0) {
+                    let newHeight = formulaElement.clientHeight;
+                    if (settings.maxInsertHeight > 0 && newHeight > settings.maxInsertHeight) {
+                      newHeight = settings.maxInsertHeight;
+                      if (formulaElement.clientWidth > 0) {
+                        let ratio = formulaElement.clientWidth / formulaElement.clientHeight;
+                        formulaElement.width = ratio * newHeight;
+                      }
+                    }
+                    formulaElement.height = newHeight;
+                  }
+                };
 								editor.windowManager.close();
 							}
 						});
