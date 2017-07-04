@@ -1,2 +1,12 @@
-# fmatheditor
-FMathEditor TinyMCE math formula editor sources mirror
+
+fMath **********************************************
+
+	http://www.fMath.info/
+
+AUTHOR *********************************************
+
+	@author		: Ionel Alexandru
+	@mail		: ionel.alexandru@gmail.com
+	@blog		: http://mathmlflash.blogspot.com/
+	
+
