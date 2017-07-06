@@ -35,20 +35,13 @@ tinymce.PluginManager.add('FMathEditor', function(editor, url) {
 								editor.insertContent('<img id="newFormula" alt="MathML (base64):'+ window.btoa(mathml) +'" src="'+img+'"/>');
                 var formulaElement = editor.getDoc().getElementById('newFormula');
                 formulaElement.removeAttribute('id');
+                debugger;
                 formulaElement.onload = function() {
                   if (formulaElement.clientWidth > 0) {
                     formulaElement.width = formulaElement.clientWidth;
                   }
                   if (formulaElement.clientHeight > 0) {
-                    let newHeight = formulaElement.clientHeight;
-                    if (settings.maxInsertHeight > 0 && newHeight > settings.maxInsertHeight) {
-                      newHeight = settings.maxInsertHeight;
-                      if (formulaElement.clientWidth > 0) {
-                        let ratio = formulaElement.clientWidth / formulaElement.clientHeight;
-                        formulaElement.width = ratio * newHeight;
-                      }
-                    }
-                    formulaElement.height = newHeight;
+                    formulaElement.height = formulaElement.clientHeight;
                   }
                 };
 								editor.windowManager.close();
