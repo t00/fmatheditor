@@ -4,7 +4,7 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
 
   editor.addCommand('FMathEditor', function () {
     editor.windowManager.open({
-      title: 'FMath Editor - www.fmath.info',
+      title: 'Equation Editor',
       file: url + '/editor/onlyEditor.html',
       width: 1050,
       id: 'FMathEditorIFrame',
