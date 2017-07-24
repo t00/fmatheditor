@@ -50,21 +50,18 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
     });
   });
 
+  editor.on('NodeChange', function (e) {
+    if (e.element.nodeName == 'IMG') {
+      FMath_selectedElement = e.element;
+    } else {
+      FMath_selectedElement = null;
+    }
+  });
+
   editor.addButton('FMathEditor', {
     title: 'Insert equation',
     image: url + '/icons/FMathEditor.png',
-    cmd: 'FMathEditor',
-    onPostRender: function () {
-      var ctrl = this;
-      editor.on('NodeChange', function (e) {
-        if (e.element.nodeName == 'IMG') {
-          FMath_selectedElement = e.element;
-        } else {
-          FMath_selectedElement = null;
-        }
-      });
-    }
-
+    cmd: 'FMathEditor'
   });
 
 });
