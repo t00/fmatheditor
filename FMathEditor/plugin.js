@@ -21,24 +21,28 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
               break;
             }
           }
+          debugger;
           var mathml = frame.contentWindow.getMathML();
           var img = frame.contentWindow.getBlobOrUrl(function (result) {
             if (result.indexOf("ERROR:") == 0) {
               alert(result);
             } else {
-              var img = result;
-              var editor = tinymce.activeEditor;
-              editor.insertContent('<img id="newFormula" alt="MathML (base64):' + window.btoa(mathml) + '" src="' + img + '"/>');
-              var formulaElement = editor.getDoc().getElementById('newFormula');
-              formulaElement.removeAttribute('id');
-              formulaElement.onload = function () {
-                if (formulaElement.clientWidth > 0) {
-                  formulaElement.width = formulaElement.clientWidth;
+              // minimum usable base64 encoded png image size to accept including header)
+              if(result.length >= 32) {
+                var img = result;
+                var editor = tinymce.activeEditor;
+                editor.insertContent('<img id="newFormula" alt="MathML (base64):' + window.btoa(mathml) + '" src="' + img + '"/>');
+                var formulaElement = editor.getDoc().getElementById('newFormula');
+                formulaElement.removeAttribute('id');
+                formulaElement.onload = function () {
+                  if (formulaElement.clientWidth > 0) {
+                    formulaElement.width = formulaElement.clientWidth;
+                  }
+                  if (formulaElement.clientHeight > 0) {
+                    formulaElement.height = formulaElement.clientHeight;
+                  }
                 }
-                if (formulaElement.clientHeight > 0) {
-                  formulaElement.height = formulaElement.clientHeight;
-                }
-              };
+              }
               editor.windowManager.close();
             }
           });
