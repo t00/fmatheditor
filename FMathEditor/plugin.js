@@ -21,7 +21,6 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
               break;
             }
           }
-          debugger;
           var mathml = frame.contentWindow.getMathML();
           var img = frame.contentWindow.getBlobOrUrl(function (result) {
             if (result.indexOf("ERROR:") == 0) {
