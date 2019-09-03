@@ -35,7 +35,7 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
         var mathml = frame.contentWindow.getMathML();
 
         var zoom = frame.contentDocument.querySelector('#FMathEd1_view_select_zoom');
-        zoom.value = 300;
+        zoom.value = 400;
         zoom.dispatchEvent(new Event('change'));
 
         frame.contentWindow.getBlobOrUrl(function (result) {
@@ -52,8 +52,8 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
               formulaElement.removeAttribute('id');
               formulaElement.onload = function () {
                 if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
-                  var width = formulaElement.clientWidth / 3;
-                  var height = formulaElement.clientHeight / 3;
+                  var width = formulaElement.clientWidth / 4;
+                  var height = formulaElement.clientHeight / 4;
 
                   formulaElement.width = width;
                   formulaElement.height = height;
