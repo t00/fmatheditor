@@ -36,7 +36,15 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
 
         var zoom = frame.contentDocument.querySelector('#FMathEd1_view_select_zoom');
         zoom.value = 400;
-        zoom.dispatchEvent(new Event('change'));
+
+        var event;
+        if (typeof (Event) === 'function') {
+          event = new Event('change');
+        } else {
+          event = document.createEvent('Event');
+          event.initEvent('change', true, true);
+        }
+        zoom.dispatchEvent(event);
 
         frame.contentWindow.getBlobOrUrl(function (result) {
           if (result.indexOf("ERROR:") == 0) {
