@@ -60,8 +60,9 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
               formulaElement.removeAttribute('id');
               formulaElement.onload = function () {
                 if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
-                  var width = formulaElement.clientWidth / 4;
-                  var height = formulaElement.clientHeight / 4;
+                  var isIE = window.navigator.userAgent.indexOf("MSIE ") > 0 || !!window.navigator.userAgent.match(/Trident.*rv\:11\./);
+                  var width = formulaElement.clientWidth / (isIE ? 1 : 4);
+                  var height = formulaElement.clientHeight / (isIE ? 1 : 4);
 
                   formulaElement.width = width;
                   formulaElement.height = height;
