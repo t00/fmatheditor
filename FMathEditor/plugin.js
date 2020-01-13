@@ -46,7 +46,7 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
         }
         zoom.dispatchEvent(event);
 
-        frame.contentWindow.getBlobOrUrl(function (result) {
+        setTimeout(frame.contentWindow.getBlobOrUrl(function (result) {
           if (result.indexOf("ERROR:") == 0) {
             alert(result);
           } else {
@@ -71,7 +71,7 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
             }
             dialogApi.close();
           }
-        });
+        }), 100);
       }
     });
 
