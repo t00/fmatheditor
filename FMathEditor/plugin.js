@@ -46,7 +46,7 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
         }
         zoom.dispatchEvent(event);
 
-        setTimeout(frame.contentWindow.getBlobOrUrl(function (result) {
+        frame.contentWindow.getBlobOrUrl(function (result) {
           if (result.indexOf("ERROR:") == 0) {
             alert(result);
           } else {
@@ -58,11 +58,22 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
               editor.insertContent('<img id="newFormula" alt="MathML (base64):' + window.btoa(mathml) + '" src="' + img + '"/>');
               var formulaElement = editor.getDoc().getElementById('newFormula');
               formulaElement.removeAttribute('id');
+
+              var width = 0;
+              var height = 0;
+              var isIE = window.navigator.userAgent.indexOf("MSIE ") > 0 || !!window.navigator.userAgent.match(/Trident.*rv\:11\./);
+              if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
+                width = formulaElement.clientWidth / (isIE ? 2 : 4);
+                height = formulaElement.clientHeight / (isIE ? 2 : 4);
+              }
+
               formulaElement.onload = function () {
-                if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
-                  var isIE = window.navigator.userAgent.indexOf("MSIE ") > 0 || !!window.navigator.userAgent.match(/Trident.*rv\:11\./);
-                  var width = formulaElement.clientWidth / (isIE ? 2 : 4);
-                  var height = formulaElement.clientHeight / (isIE ? 2 : 4);
+                if (width > 0 && height > 0) {
+                  formulaElement.width = width;
+                  formulaElement.height = height;
+                } else if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
+                  width = formulaElement.clientWidth / (isIE ? 2 : 4);
+                  height = formulaElement.clientHeight / (isIE ? 2 : 4);
 
                   formulaElement.width = width;
                   formulaElement.height = height;
@@ -71,7 +82,7 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
             }
             dialogApi.close();
           }
-        }), 100);
+        });
       }
     });
 
