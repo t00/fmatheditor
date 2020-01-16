@@ -61,10 +61,9 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
 
               var width = 0;
               var height = 0;
-              var isIE = window.navigator.userAgent.indexOf("MSIE ") > 0 || !!window.navigator.userAgent.match(/Trident.*rv\:11\./);
               if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
-                width = formulaElement.clientWidth / (isIE ? 2 : 4);
-                height = formulaElement.clientHeight / (isIE ? 2 : 4);
+                width = formulaElement.clientWidth / 4;
+                height = formulaElement.clientHeight / 4;
               }
 
               formulaElement.onload = function () {
@@ -72,8 +71,8 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
                   formulaElement.width = width;
                   formulaElement.height = height;
                 } else if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
-                  width = formulaElement.clientWidth / (isIE ? 2 : 4);
-                  height = formulaElement.clientHeight / (isIE ? 2 : 4);
+                  width = formulaElement.clientWidth / 4;
+                  height = formulaElement.clientHeight / 4;
 
                   formulaElement.width = width;
                   formulaElement.height = height;
