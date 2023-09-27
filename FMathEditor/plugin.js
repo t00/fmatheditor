@@ -59,13 +59,14 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
               var formulaElement = editor.getDoc().getElementById('newFormula');
               formulaElement.removeAttribute('id');
               formulaElement.onload = function () {
-                if (formulaElement.clientWidth > 0 && formulaElement.clientHeight > 0) {
-                  var isIE = window.navigator.userAgent.indexOf("MSIE ") > 0 || !!window.navigator.userAgent.match(/Trident.*rv\:11\./);
-                  var width = formulaElement.clientWidth / (isIE ? 2 : 4);
-                  var height = formulaElement.clientHeight / (isIE ? 2 : 4);
+                if (formulaElement.naturalWidth > 0 && !formulaElement.getAttribute('width')) {
+                  var width = Math.round(formulaElement.naturalWidth / 4);
+                  formulaElement.setAttribute('width', `${width}px`);
+                }
 
-                  formulaElement.width = width;
-                  formulaElement.height = height;
+                if (formulaElement.naturalHeight > 0 && !formulaElement.getAttribute('height')) {
+                  var height = Math.round(formulaElement.naturalHeight / 4);
+                  formulaElement.setAttribute('height', `${height}px`);
                 }
               }
             }
