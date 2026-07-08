@@ -46,33 +46,35 @@ tinymce.PluginManager.add('FMathEditor', function (editor, url) {
         }
         zoom.dispatchEvent(event);
 
-        setTimeout(frame.contentWindow.getBlobOrUrl(function (result) {
-          if (result.indexOf("ERROR:") == 0) {
-            alert(result);
-          } else {
-            // minimum usable base64 encoded png image size to accept including header)
-            if(result.length >= 32) {
-              var canvas = frame.contentDocument.querySelector('#FMathEd1_mainCanvas');
-              var img = canvas.toDataURL();
-              var editor = tinymce.activeEditor;
-              editor.insertContent('<img id="newFormula" alt="MathML (base64):' + window.btoa(mathml) + '" src="' + img + '"/>');
-              var formulaElement = editor.getDoc().getElementById('newFormula');
-              formulaElement.removeAttribute('id');
-              formulaElement.onload = function () {
-                if (formulaElement.naturalWidth > 0 && !formulaElement.getAttribute('width')) {
-                  var width = Math.round(formulaElement.naturalWidth / 4);
-                  formulaElement.setAttribute('width', `${width}px`);
-                }
+        setTimeout(function () {
+          frame.contentWindow.getBlobOrUrl(function (result) {
+            if (result.indexOf("ERROR:") == 0) {
+              alert(result);
+            } else {
+              // minimum usable base64 encoded png image size to accept including header)
+              if(result.length >= 32) {
+                var canvas = frame.contentDocument.querySelector('#FMathEd1_mainCanvas');
+                var img = canvas.toDataURL();
+                var editor = tinymce.activeEditor;
+                editor.insertContent('<img id="newFormula" alt="MathML (base64):' + window.btoa(mathml) + '" src="' + img + '"/>');
+                var formulaElement = editor.getDoc().getElementById('newFormula');
+                formulaElement.removeAttribute('id');
+                formulaElement.onload = function () {
+                  if (formulaElement.naturalWidth > 0 && !formulaElement.getAttribute('width')) {
+                    var width = Math.round(formulaElement.naturalWidth / 4);
+                    formulaElement.setAttribute('width', `${width}px`);
+                  }
 
-                if (formulaElement.naturalHeight > 0 && !formulaElement.getAttribute('height')) {
-                  var height = Math.round(formulaElement.naturalHeight / 4);
-                  formulaElement.setAttribute('height', `${height}px`);
+                  if (formulaElement.naturalHeight > 0 && !formulaElement.getAttribute('height')) {
+                    var height = Math.round(formulaElement.naturalHeight / 4);
+                    formulaElement.setAttribute('height', `${height}px`);
+                  }
                 }
               }
+              dialogApi.close();
             }
-            dialogApi.close();
-          }
-        }), 100);
+          });
+        }, 100);
       }
     });
 
