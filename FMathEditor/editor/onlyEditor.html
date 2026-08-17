@@ -20,6 +20,19 @@
 	<script src="spectrum/spectrum.js"></script>
 
 	<link href="fmath/editor.css" rel="stylesheet" >
+
+	<!-- The formula canvas is drawn with the STIXGeneral faces, whose stylesheets the editor
+	     only injects once it starts up (see ju.prototype.start in fmath/fmathEditorC.js) and
+	     then waits a limited time for. A stylesheet link would not help: @font-face fetches
+	     the font file lazily, on first use. Preloading pulls the files now, while the rest of
+	     the editor is still loading, so the faces are cache hits by the time they are used and
+	     the formula is not drawn in a fallback font. STIXGeneral-Regular-Unicode is ~300KB and
+	     is the one that used to lose the race on a cold cache. `crossorigin` is required on
+	     font preloads even same-origin, otherwise the file is fetched twice. -->
+	<link rel="preload" as="font" type="font/woff" crossorigin href="fmath/fonts/stix/STIXGeneral-Regular.woff">
+	<link rel="preload" as="font" type="font/woff" crossorigin href="fmath/fonts/stix/STIXGeneral-Italic.woff">
+	<link rel="preload" as="font" type="font/woff" crossorigin href="fmath/fonts/stix/STIXGeneral-Regular-Unicode.woff">
+
 	<script src="fmath/lang/en.js"></script>
 	<script src="fmath/fonts/fmathFormulaFonts.js"></script>
 	<script src="fmath/fmathEditorC.js"></script>
